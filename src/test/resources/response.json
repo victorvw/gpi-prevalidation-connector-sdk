@@ -1,0 +1,10 @@
+{
+  "correlation_identifier": "SCENARIO1-CORRID-001",
+  "response": {
+    "account_validation_status": "PASS",
+    "creditor_account_match": "MTCH",
+    "creditor_name_match": "NOAP",
+    "creditor_address_match": "NOAP",
+    "creditor_organisation_identification_match": "NOAP"
+  }
+}

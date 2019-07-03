@@ -1,0 +1,386 @@
+{
+  "$schema": "http://json-schema.org/draft-04/schema#",
+  "type": "object",
+  "description": "Beneficiary account verification request.",
+  "additionalProperties": false,
+  "properties": {
+    "correlation_identifier": {
+      "description": "Identifier of the request, assigned by the sender of the request. It will allow the requestor to correlate the request and the response.",
+      "$ref": "#/definitions/Max50Text"
+    },
+    "context": {
+      "description": "Context in which this transaction is performed.",
+      "$ref": "#/definitions/AccountValidationCheckContext1Code"
+    },
+    "uetr": {
+      "description": "UETR of the transaction that is going to be sent to this account.",
+      "$ref": "#/definitions/UUIDv4Identifier"
+    },
+    "creditor_account": {
+      "description": "Identifies the account targeted by the transaction.",
+      "$ref": "#/definitions/Max34Text"
+    },
+    "creditor_name": {
+      "description": "Name by which the creditor is known.",
+      "$ref": "#/definitions/Max140Text"
+    },
+    "creditor_address": {
+      "description": "Information that locates and identifies the address of the creditor, as defined by postal services.",
+      "$ref": "#/definitions/PostalAddress26"
+    },
+    "creditor_organisation_identification": {
+      "description": "Unique and unambiguous way to identify a creditor.",
+      "$ref": "#/definitions/OrganisationIdentification8"
+    },
+    "creditor_agent": {
+      "description": "Financial institution servicing an account for the creditor.",
+      "$ref": "#/definitions/FinancialInstitutionIdentification20"
+    },
+    "creditor_agent_branch_identification": {
+      "description": "Identifies a specific branch of the creditor.",
+      "$ref": "#/definitions/Max35Text"
+    }
+  },
+  "required": [
+    "context",
+    "creditor_account",
+    "creditor_name"
+  ],
+  "definitions": {
+    "PostalAddress26": {
+      "type": "object",
+      "description": "Information that locates and identifies a specific address, as defined by postal services.",
+      "additionalProperties": false,
+      "properties": {
+        "country": {
+          "description": "Nation with its own government.",
+          "$ref": "#/definitions/CountryCode"
+        },
+        "address_line": {
+          "type": "array",
+          "maxItems": 7,
+          "description": "Information that locates and identifies a specific address, as defined by postal services, presented in free format text.",
+          "items": {
+            "$ref": "#/definitions/Max70Text"
+          }
+        },
+        "post_code": {
+          "description": "Identifier consisting of a group of letters and/or numbers that is added to a postal address to assist the sorting of mail.",
+          "$ref": "#/definitions/Max16Text"
+        },
+        "town_name": {
+          "description": "Name of a built-up area, with defined boundaries, and a local government.",
+          "$ref": "#/definitions/Max35Text"
+        }
+      }
+    },
+    "UUIDv4Identifier": {
+      "type": "string",
+      "description": "Universally Unique IDentifier (UUID) version 4, as described in IETC RFC 4122 \"Universally Unique IDentifier (UUID) URN Namespace\".",
+      "pattern": "^[a-f0-9]{8}-[a-f0-9]{4}-4[a-f0-9]{3}-[89ab][a-f0-9]{3}-[a-f0-9]{12}$"
+    },
+    "GenericOrganisationIdentification1": {
+      "type": "object",
+      "description": "Information related to an identification of an organisation.",
+      "additionalProperties": false,
+      "properties": {
+        "identification": {
+          "description": "Identification assigned by an institution.",
+          "$ref": "#/definitions/Max35Text"
+        },
+        "scheme_name": {
+          "description": "Name of the identification scheme.",
+          "$ref": "#/definitions/OrganisationIdentificationSchemeName1Choice"
+        },
+        "issuer": {
+          "description": "Entity that assigns the identification.",
+          "$ref": "#/definitions/Max35Text"
+        }
+      },
+      "required": [
+        "identification"
+      ]
+    },
+    "AccountValidationCheckContext1Code": {
+      "type": "string",
+      "enum": [
+        "BENR",
+        "PAYM",
+        "RFPP"
+      ]
+    },
+    "ExternalClearingSystemIdentification1Code": {
+      "type": "string",
+      "description": "Specifies the clearing system identification code, as published in an external clearing system identification code list.\r\nExternal code sets can be downloaded from www.iso20022.org."
+    },
+    "ExternalOrganisationIdentification1Code": {
+      "type": "string",
+      "description": "Specifies the external organisation identification scheme name code in the format of character string with a maximum length of 4 characters.\r\nThe list of valid codes is an external code list published separately.\r\nExternal code sets can be downloaded from www.iso20022.org."
+    },
+    "AnyBICIdentifier": {
+      "type": "string",
+      "description": "Code allocated to a financial or non-financial institution by the ISO 9362 Registration Authority, as described in ISO 9362 \"Banking - Banking telecommunication messages - Business identifier code (BIC)\".",
+      "pattern": "^[A-Z]{6,6}[A-Z2-9][A-NP-Z0-9]([A-Z0-9]{3,3}){0,1}$"
+    },
+    "Max70Text": {
+      "type": "string",
+      "description": "Specifies a character string with a maximum length of 70characters.",
+      "minLength": 1,
+      "maxLength": 70
+    },
+    "AccountValidationResponse1Code": {
+      "type": "string",
+      "enum": [
+        "NOTC",
+        "NOAP",
+        "NMTC",
+        "MTCH"
+      ]
+    },
+    "AccountValidationResponse2Code": {
+      "type": "string",
+      "enum": [
+        "NMTC",
+        "MTCH"
+      ]
+    },
+    "AccountValidationResponse3Code": {
+      "type": "string",
+      "enum": [
+        "PASS",
+        "INCO",
+        "FAIL"
+      ]
+    },
+    "ValidationCheckReponse1": {
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "account_validation_status": {
+          "description": "Overall status of the account verification.",
+          "$ref": "#/definitions/AccountValidationResponse3Code"
+        },
+        "creditor_account_match": {
+          "description": "Whether an account was found in the banks books identified by the provided creditor account identification (number) that can receive incoming funds.",
+          "$ref": "#/definitions/AccountValidationResponse2Code"
+        },
+        "creditor_name_match": {
+          "description": "Result of matching the provided creditor name with the account holder name. The matching logic used must follow the same rules as the ones that would be apply when the transaction will be processed.",
+          "$ref": "#/definitions/AccountValidationResponse1Code"
+        },
+        "creditor_address_match": {
+          "description": "Result of matching the provided creditor address with the account holder address. The matching logic used must follow the same rules as the ones that would be apply when the transaction will be processed.",
+          "$ref": "#/definitions/AccountValidationResponse1Code"
+        },
+        "creditor_organisation_identification_match": {
+          "description": "Result of matching the provided creditor organization identification with the account holder name. The matching logic used must follow the same rules as the ones that would be apply when the transaction will be processed.",
+          "$ref": "#/definitions/AccountValidationResponse1Code"
+        }
+      },
+      "required": [
+        "account_validation_status",
+        "creditor_name_match",
+        "creditor_address_match",
+        "creditor_organisation_identification_match"
+      ]
+    },
+    "ClearingSystemMemberIdentification2": {
+      "type": "object",
+      "description": "Unique identification, as assigned by a clearing system, to unambiguously identify a member of the clearing system.",
+      "additionalProperties": false,
+      "properties": {
+        "clearing_system_identification": {
+          "description": "Specification of a pre-agreed offering between clearing agents or the channel through which the payment instruction is processed.",
+          "$ref": "#/definitions/ClearingSystemIdentification2Choice"
+        },
+        "member_identification": {
+          "description": "Identification of a member of a clearing system.",
+          "$ref": "#/definitions/Max35Text"
+        }
+      },
+      "required": [
+        "member_identification"
+      ]
+    },
+    "FinancialInstitutionIdentification20": {
+      "type": "object",
+      "description": "Set of elements used to identify a financial institution.",
+      "additionalProperties": false,
+      "properties": {
+        "bicfi": {
+          "description": "Code allocated to a financial institution by the ISO 9362 Registration Authority as described in ISO 9362 \"Banking - Banking telecommunication messages - Business identifier code (BIC)\".",
+          "$ref": "#/definitions/BICFIIdentifier"
+        },
+        "clearing_system_member_identification": {
+          "description": "Information used to identify a member within a clearing system.",
+          "$ref": "#/definitions/ClearingSystemMemberIdentification2"
+        }
+      }
+    },
+    "BICFIIdentifier": {
+      "type": "string",
+      "description": "Code allocated to a financial institution by the ISO 9362 Registration Authority as described in ISO 9362 \"Banking - Banking telecommunication messages - Business identifier code (BIC)\".",
+      "pattern": "^[A-Z]{6,6}[A-Z2-9][A-NP-Z0-9]([A-Z0-9]{3,3}){0,1}$"
+    },
+    "CountryCode": {
+      "type": "string",
+      "description": "Code to identify a country, a dependency, or another area of particular geopolitical interest, on the basis of country names obtained from the United Nations (ISO 3166, Alpha-2 code).",
+      "pattern": "^[A-Z]{2,2}$"
+    },
+    "Max140Text": {
+      "type": "string",
+      "description": "Specifies a character string with a maximum length of 140 characters.",
+      "minLength": 1,
+      "maxLength": 140
+    },
+    "Max35Text": {
+      "type": "string",
+      "description": "Specifies a character string with a maximum length of 35 characters.",
+      "minLength": 1,
+      "maxLength": 35
+    },
+    "Max16Text": {
+      "type": "string",
+      "description": "Specifies a character string with a maximum length of 16 characters.",
+      "minLength": 1,
+      "maxLength": 16
+    },
+    "ClearingSystemIdentification2Choice": {
+      "type": "object",
+      "description": "Choice of a clearing system identifier.",
+      "additionalProperties": false,
+      "properties": {
+        "code": {
+          "description": "Identification of a clearing system, in a coded form as published in an external list.",
+          "$ref": "#/definitions/ExternalClearingSystemIdentification1Code"
+        },
+        "proprietary": {
+          "description": "Identification code for a clearing system, that has not yet been identified in the list of clearing systems.",
+          "$ref": "#/definitions/Max35Text"
+        }
+      },
+      "maxProperties": 1,
+      "minProperties": 1
+    },
+    "Max34Text": {
+      "type": "string",
+      "description": "Specifies a character string with a maximum length of 34 characters.",
+      "minLength": 1,
+      "maxLength": 34
+    },
+    "OrganisationIdentification8": {
+      "type": "object",
+      "description": "Unique and unambiguous way to identify an organisation.",
+      "additionalProperties": false,
+      "properties": {
+        "any_bic": {
+          "description": "Code allocated to a financial institution or non financial institution by the ISO 9362 Registration Authority as described in ISO 9362 \"Banking - Banking telecommunication messages - Business identifier code (BIC)\".",
+          "$ref": "#/definitions/AnyBICIdentifier"
+        },
+        "other": {
+          "type": "array",
+          "description": "Unique identification of an organisation, as assigned by an institution, using an identification scheme.",
+          "items": {
+            "$ref": "#/definitions/GenericOrganisationIdentification1"
+          }
+        }
+      }
+    },
+    "OrganisationIdentificationSchemeName1Choice": {
+      "type": "object",
+      "description": "Sets of elements to identify a name of the organisation identification scheme.",
+      "additionalProperties": false,
+      "properties": {
+        "code": {
+          "description": "Name of the identification scheme, in a coded form as published in an external list.",
+          "$ref": "#/definitions/ExternalOrganisationIdentification1Code"
+        },
+        "proprietary": {
+          "description": "Name of the identification scheme, in a free text form.",
+          "$ref": "#/definitions/Max35Text"
+        }
+      },
+      "maxProperties": 1,
+      "minProperties": 1
+    },
+    "Max50Text": {
+      "type": "string",
+      "description": "Specifies a character string with a maximum length of 50 characters.",
+      "minLength": 1,
+      "maxLength": 50
+    },
+    "ErrorCodeConsumer": {
+      "type": "object",
+      "required": [
+        "status"
+      ],
+      "properties": {
+        "status": {
+          "$ref": "#/definitions/StatusCodeConnector"
+        }
+      }
+    },
+    "StatusCodeConnector": {
+      "required": [
+        "code",
+        "severity",
+        "text"
+      ],
+      "properties": {
+        "severity": {
+          "type": "string",
+          "enum": [
+            "Fatal",
+            "Transient"
+          ]
+        },
+        "code": {
+          "type": "string",
+          "enum": [
+            "SwAP001",
+            "SwAP002",
+            "SwAP003",
+            "SwAP005",
+            "SwAP006",
+            "SwAP007",
+            "SwAP008",
+            "SwAP010",
+            "SwAP009",
+            "SwAP011",
+            "SwAP099",
+            "SwAP090",
+            "SwAP501",
+            "SwAP504",
+            "SwAP506",
+            "SwAP507",
+            "SwAP521",
+            "SwAP522",
+            "SwAP590",
+            "SwAP591",
+            "SwAPProxy001",
+            "SwAPProxy002",
+            "SwAPProxy003",
+            "SwAPProxy004",
+            "SwAPProxy005",
+            "SwAPProxy006",
+            "SwAPProxy007",
+            "SwAPProxy008",
+            "CANT",
+            "UNAV",
+            "InvalidRequest",
+            "MandatoryFieldMissing",
+            "MyInstitutionAuthorizationFailure",
+            "FromAuthorizationFailure",
+            "NoResultFound",
+            "UnknownTransaction",
+            "InvalidRBACRole",
+            "InternalError"
+          ]
+        },
+        "text": {
+          "type": "string"
+        }
+      }
+    }
+  }
+}

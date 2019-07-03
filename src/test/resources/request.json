@@ -1,0 +1,13 @@
+{
+  "correlation_identifier": "SCENARIO1-CORRID-001",
+  "context": "BENR",
+  "uetr": "b916a97d-a699-4f20-b8c2-2b07e2684a27",
+  "creditor_account": "GB3112000000001987426375",
+  "creditor_name": "John Doe",
+  "creditor_address": {
+    "country": "GB"
+  },
+  "creditor_organisation_identification": {
+    "any_bic": "BANABEBB"
+  }
+}
