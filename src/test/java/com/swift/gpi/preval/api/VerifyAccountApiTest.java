@@ -13,8 +13,6 @@ import com.swift.gpi.preval.model.AccountVerificationRequest;
 import com.swift.gpi.preval.model.AccountVerificationResponse1;
 import org.everit.json.schema.ValidationException;
 import org.junit.Test;
-
-import java.io.FileWriter;
 import org.everit.json.schema.Schema;
 import org.everit.json.schema.loader.SchemaLoader;
 import java.util.*;
