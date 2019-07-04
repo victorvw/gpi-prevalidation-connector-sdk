@@ -103,21 +103,13 @@ public class VerifyAccountApiTest {
         Gson gsonObj = new GsonBuilder().setPrettyPrinting().create();
         String json = gsonObj.toJson(response);
 
-        try (FileWriter fileWriter = new FileWriter("src/test/resources/response.json")) {
-            fileWriter.write(json);
-            System.out.println("Response write to file: src/test/resouces/response.json");
-        }
-
         JSONObject responseSchemaFile = new JSONObject(
                 new JSONTokener(VerifyAccountApiTest.class.getResourceAsStream("/SWIFT-API-gpi-prevalidation-account-verification-response-1.0.7.json")));
-
-        JSONObject responsePayload = new JSONObject(
-                new JSONTokener(VerifyAccountApiTest.class.getResourceAsStream("/response.json")));
 
         Schema responseSchema = SchemaLoader.load(responseSchemaFile);
 
         try{
-            responseSchema.validate(responsePayload);
+            responseSchema.validate(new JSONObject(json));
             System.out.println("Response payload validated against schema successfully!");
         } catch (ValidationException e){
             e.printStackTrace();
