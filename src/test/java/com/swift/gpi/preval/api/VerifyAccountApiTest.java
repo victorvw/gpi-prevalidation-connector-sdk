@@ -77,7 +77,7 @@ public class VerifyAccountApiTest {
         String laUSigned = SIGNED;
         String xBic = "cclabeb0";
         String subjectDN = "o=cclausb0,o=swift" ;
-        String institution = "cclabeb0";
+        String institution = "cclausb0";
         String laUSignature = calculateLAU(laUApplicationID, laUCallTime,laURequestNonce,laUSigned, LAUKEY, ABSPATH, jsonStr);
 
         JSONObject requestSchemaFile = new JSONObject(
