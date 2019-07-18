@@ -40,7 +40,7 @@ public class VerifyAccountApiTest {
      public static String CRLF = "\r\n";
      public static String LAU_VERSION = "1.0";
      public static String APPL_ID = "BO2";
-     public static String SIGNED = "(ApplAPIKey=yVGhKiV5z1ZGdaqFXoZ8AiSA9n5CrY6B),(RBACRole=[FullViewer/Scope/GPAGCH3A])";
+     public static String SIGNED = "(ApplAPIKey=yVGhKiV5z1ZGdaqFXoZ8AiSA9n5CrY6B),(x-bic=cclabeb0)";
      public static String LAUKEY = "Abcd1234Abcd1234Abcd1234Abcd1234";
      public static String ABSPATH = "/swift-preval-pilot/v1/accounts/verification";
 
@@ -70,14 +70,14 @@ public class VerifyAccountApiTest {
         AccountVerificationRequest body = null;
         body = g.fromJson(jsonStr1, AccountVerificationRequest.class);
         String jsonStr = g.toJson(body);
-        String laUApplicationID = "001";
+        String laUApplicationID = APPL_ID;
         String laUVersion = "1.0";
         String laUCallTime = getDateTimeInZulu();
         String laURequestNonce = UUID.randomUUID().toString();
-        String laUSigned = "(ApplAPIKey=yVGhKiV5z1ZGdaqFXoZ8AiSA9n5CrY6B),(x-bic=CCLABEB0)";
-        String xBic = "CCLABEB0";
+        String laUSigned = SIGNED;
+        String xBic = "cclabeb0";
         String subjectDN = "o=cclausb0,o=swift" ;
-        String institution = "CCLABEB0";
+        String institution = "cclabeb0";
         String laUSignature = calculateLAU(laUApplicationID, laUCallTime,laURequestNonce,laUSigned, LAUKEY, ABSPATH, jsonStr);
 
         JSONObject requestSchemaFile = new JSONObject(
