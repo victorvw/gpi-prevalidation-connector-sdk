@@ -17,7 +17,7 @@ import com.swift.gpi.preval.Pair;
 import java.util.Map;
 import java.util.List;
 
-@javax.annotation.Generated(value = "io.swagger.codegen.v3.generators.java.JavaClientCodegen", date = "2019-06-19T14:52:07.265298-04:00[America/New_York]")public class ApiKeyAuth implements Authentication {
+@javax.annotation.Generated(value = "io.swagger.codegen.v3.generators.java.JavaClientCodegen", date = "2019-07-18T16:24:24.420-04:00[America/New_York]")public class ApiKeyAuth implements Authentication {
   private final String location;
   private final String paramName;
 

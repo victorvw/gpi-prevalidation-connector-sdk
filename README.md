@@ -1,7 +1,7 @@
 # gpi-prevalidation-connector-sdk
 
 Beneficiary account pre-validation
-- API version: 1.0.7-oas3
+- API version: 1.0.10
 
 Move your app forward with the Account Pre-Validation API
 

@@ -74,7 +74,7 @@ public class VerifyAccountApiTest {
         String laUVersion = "1.0";
         String laUCallTime = getDateTimeInZulu();
         String laURequestNonce = UUID.randomUUID().toString();
-        String laUSigned = "(ApplAPIKey=yVGhKiV5z1ZGdaqFXoZ8AiSA9n5CrY6B),(RBACRole=[Update/Scope/BANABEBB],(x-bic=CCLABEB0))";
+        String laUSigned = "(ApplAPIKey=yVGhKiV5z1ZGdaqFXoZ8AiSA9n5CrY6B),(x-bic=CCLABEB0)";
         String xBic = "CCLABEB0";
         String subjectDN = "o=cclausb0,o=swift" ;
         String institution = "CCLABEB0";
